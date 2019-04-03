@@ -19,7 +19,7 @@ git remote add origin git@github.com:songchuanwei/walk.git
 git pull origin master
 ```
 
-导入数据库 shop.sql
+导入数据库 walk.sql
 
 修改application/database.php   数据库相关信息
 
