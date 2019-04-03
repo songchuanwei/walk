@@ -1,0 +1,153 @@
+{extend name="layout:index"/}
+
+{block name="css"}
+    <style>
+        .form-control {
+            background-color: #f9f9f9;
+            border: 1px solid #E0E0E0;
+            border-radius: 0px;
+            box-shadow: none;
+            height: auto;
+            padding: 10px 28px;
+        }
+    </style>
+{/block}
+
+{block name="content"}
+    
+    <header class="page-head">
+        <div class="header-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <ol class="breadcrumb">
+                            <li><a href="#">首页</a></li>
+                            <li class="active">资讯列表</li>
+                        </ol> <!-- end of /.breadcrumb -->
+
+                    </div>
+                </div>
+            </div> <!-- /.container -->
+        </div> <!-- /.header-wrapper -->
+    </header> 
+
+
+    <section class="blog-content">
+        <div class="container">
+            <div class="row">
+
+                <main class="col-md-9" style="display: block;">
+
+
+                    {foreach $articles as $article}
+                    <article class="blog-item">
+                        <img class="img-responsive center-block" src="{$article->img}" style="width: 847px;height: 375px;" alt="blog-item1">
+                        <div class="blog-heading">
+                            <h3 class="text-capitalize">{$article->title}</h3>
+                            <span class="date">{:date('M-d H:i',strtotime($article->create_time))}</span>
+                            <span>{$article->comments()->count()} 评论</span>
+                            <span>{$article->zanUsers()->count()} 赞</span>
+                        </div>
+                        <p>
+                            {:setStr(strip_tags($article->content),250)}
+                        </p>
+                        <br>
+                        <a href="/article/show?id={$article->id}" class="text-capitalize ">
+                            read more
+                            <span><i class="fa fa-angle-double-right"></i> </span>
+                        </a>
+                    </article> <!-- /.blog-item -->
+                    {/foreach}
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <blockquote>
+                                <p>Duis eget ultricies lorem, et rhoncus augue. Aliquam id est semper, tincidunt nisi ac, tristique enim. Phasellus accumsan, enim eget facilisis mollis, est orcidearn malesuada libero, at tristique ligula nulla id eros hasellus accumsan.</p>
+                                <footer>Technext</footer>
+                            </blockquote>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class= "col-md-6 col-md-offset-3 text-center">
+                            {$articles->render()}
+                        </div>
+                    </div>
+                </main>
+
+
+                <!-- begin sidebar -->
+                <aside class="col-md-3" style="margin-top: 25px;">
+                    <form action="/article/index" method="get">
+                        <div class="input-group">
+                          <input type="text" value="{$title}" name="title" class="form-control" placeholder="资讯标题/内容">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit">搜索</button>
+                          </span>
+                        </div><!-- /input-group -->
+                    </form>
+
+                    <!-- begin archieve-widget  -->
+                    <div class="archive-widget">
+                        <h4>最新户外知识</h4>
+                        <ul class="archives">
+
+                            {foreach $outdoors as $outdoor}
+                            <li>
+                                <a href="/outdoor/show?id={$outdoor.id}" title="{$outdoor.title}">{:setStr($outdoor.title,10)}</a>
+                            </li>
+                            {/foreach}
+
+                        </ul>
+                    </div> <!-- /.archieve-widget -->
+
+                </aside>
+                <!-- end sidebar -->
+
+            </div>
+        </div>
+    </section>
+
+{/block}
+
+{block name="js"}
+    <script src="/admin/js/plugins/layer/layer.min.js"></script>
+    <script>
+		$("#home-page").attr('id','service-page');
+
+        $(".faq-q").click( function () {
+          var container = $(this).parents(".faq-c");
+          var answer = container.find(".faq-a");
+          var trigger = container.find(".faq-t");
+          
+          answer.slideToggle(200);
+          
+          if (trigger.hasClass("faq-o")) {
+            trigger.removeClass("faq-o");
+          }
+          else {
+            trigger.addClass("faq-o");
+          }
+        });
+
+       
+
+
+       function img(url) {
+            layer.open({
+                type: 1,
+                title: false,
+                closeBtn: 0,
+                shadeClose: true,
+                content: "<img alt='图片详情' title='图片详情' src=" + url + " />"
+            });
+        }
+
+        
+
+
+    </script>
+
+{/block}

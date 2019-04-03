@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html class="no-js">
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>南阳徒步网</title>
+	<link rel="stylesheet" href="/index/login/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/index/login/css/animate.css">
+	<link rel="stylesheet" href="/index/login/css/style.css">
+
+	</head>
+	<body class="style-2">
+
+		<div class="container">
+			
+			<div class="row">
+				<div class="col-md-4">
+					<div class="fh5co-form animate-box">
+						<div class="form-group">
+							<label for="username" class="sr-only">用户名/手机号</label>
+							<input type="text" class="form-control" id="username" name="username" placeholder="用户名/手机号" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label for="password" class="sr-only">密码</label>
+							<input type="password" class="form-control" id="password"  name="password"  placeholder="密码" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label for="remember"><input type="checkbox"> 记住我</label>
+						</div>
+						<div class="form-group">
+							<p>还没有账号? <a href="/login/register">注册</a></p>
+						</div>
+						<div class="form-group">
+							<input type="submit" id="btn" value="登陆" class="btn btn-primary">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row" style="padding-top: 150px; clear: both;">
+				<div class="col-md-12 text-center"><p><small>&copy; All Rights Reserved. More Templates <a href="#" title="南阳理工学院">南阳理工学院</a> - Collect from <a href="#" title="网工">网工</a></small></p></div>
+			</div>
+		</div>
+	
+	<script src="/index/login/js/jquery.min.js"></script>
+	<script src="/index/login/js/bootstrap.min.js"></script>
+	<script src="/index/login/js/jquery.placeholder.min.js"></script>
+	<script src="/index/login/js/jquery.waypoints.min.js"></script>
+	<script src="/index/login/js/main.js"></script>
+	<script src="/admin/js/plugins/layer/layer.min.js"></script>
+
+	<script>
+
+       $("#btn").click(function(event){
+            var username=$('#username').val();
+            var password=$('#password').val();
+            if(username.length==0){
+                layer.msg("用户名/手机号不能为空",{icon:2,time:1000});
+                event.preventDefault();
+                return false;
+            }
+
+            if(password.length==0){
+                layer.msg("密码不能为空",{icon:2,time:1000});
+                event.preventDefault();
+                return false;
+            }
+
+            //请求验证
+            $.ajax({
+                type: 'post',
+                url: '/login/dologin',
+                data: {
+                    username:username,
+                    password:password,
+                },
+                dataType: 'json',
+                success: function(data){
+                    if(data.error ==0 ){
+                        layer.msg(data.msg, {
+                            icon: 1,
+                            time: 2000,
+                            shade:0.5
+                        });
+                        window.location.href='/index/index';
+                    }else{
+                        layer.msg(data.msg, {
+                            icon: 2,
+                            time: 1000, 
+                            shade:0.5
+                        });
+                    }
+                }
+            });
+        }); 
+
+    </script>
+
+	</body>
+</html>
+

@@ -1,0 +1,59 @@
+{extend name="layout:index"/}
+
+{block name="css"}
+
+{/block}
+
+{block name="content"}
+
+	<!-- header begin -->
+    <header class="page-head">
+        <div class="header-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <ol class="breadcrumb">
+                            <li><a href="/index/index">首页</a></li>
+                            <li class="active">公告详情</li>
+                        </ol> <!-- end of /.breadcrumb -->
+
+                    </div>
+                </div>
+            </div> <!-- /.container -->
+        </div> <!-- /.header-wrapper -->
+    </header> <!-- /.page-head (header end) -->
+
+
+    <section class="blog-content">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 col-md-offset-2" style="display: block;">
+                    <article class="blog-item">
+                        <div class="blog-heading">
+                            <h3 class="text-capitalize">{$notice->title}</h3>
+                            <span class="date">{:date('M-d H:i',strtotime($notice->create_time))}</span>
+                        </div>
+                        <p>
+                            {$notice->content}
+                        </p>
+                        
+
+
+                    </article>
+                </main>
+            </div>
+        </div>
+    </section>
+
+
+{/block}
+
+{block name="js"}
+    <script src="/admin/js/plugins/layer/layer.min.js"></script>
+    <script>
+		$("#home-page").attr('id','single-blog-full-width');
+
+    </script>
+
+{/block}

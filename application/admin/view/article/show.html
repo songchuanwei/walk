@@ -1,0 +1,125 @@
+{extend name="layout:index"/}
+
+{block name="content"}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>文章详情</h5>
+                </div>
+                <div>
+                    <div class="ibox-content profile-content">
+                        <div class="feed-element">
+                            <a href="javascript:;" class="pull-left">
+                                <img alt="image" class="img-circle" src="{$article->user->img}" onclick="img('{$article->user->img}')">
+                            </a>
+                            <div class="media-body ">
+                                <small class="pull-right text-navy"></small>
+                                <strong>{$article->user->username}</strong>  <strong></strong>.
+                                <br>
+                                <small class="text-muted">手机号：{$article->user->phone}</small>
+                                
+                            </div>
+                        </div>
+
+                        <h4><strong>文章标题：</strong>{$article->title}</h4>
+                        <h4><strong>文章状态：</strong>{$article->status==1? "启用":"禁用"}</h4>
+                        <h4><strong>文章发布时间：</strong>{$article->create_time}</h4>
+                        <h4><strong>文章图片：</strong></h4>
+                        <p>
+                            <img src="{$article->img}" style="height: 50px;width: 100px;" onclick="img('{$article->img}')">
+                        </p>
+                        <h4><strong>文章内容：</strong></h4><p>{$article->content}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>评论：</h5>
+                </div>
+
+                {foreach $article->comments()->select() as $comment}
+                <div class="col-sm-12">
+                    <div class="social-feed-separated">
+                        <div class="social-avatar">
+                            <a href="#">
+                                <img src="{$comment->user->img}" onclick="img('{$comment->user->img}')" style="width: 50px; height: 50px" class="img-responsive center-block" alt="first-comment">
+                            </a>
+                        </div>
+                        <div class="social-feed-box">
+                            <div class="social-avatar">
+                                <a href="#">
+                                            {$comment->user->username}
+                                        </a>
+                                <small class="text-muted">{:date('m-d H:i',strtotime($comment->create_time))}</small>
+                            </div>
+                            <div class="social-body">
+                                <p>
+                                    {$comment->content}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/foreach}
+
+            </div>
+        </div>
+    
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>赞：</h5>
+                </div>
+
+                
+                <div class="col-sm-12">
+                    {foreach $article->zanUsers as $zan}
+                    <div class="col-sm-4">
+                        <div class="contact-box">
+                            <a href="profile.html">
+                                <div class="col-sm-6">
+                                    <div class="text-center">
+                                        <img src="{$zan->img}" onclick="img('{$zan->img}')" style="width: 50px; height: 50px" class="img-circle m-t-xs img-responsive">
+                                        <div class="m-t-xs font-bold">{$zan->type==1?"普通用户":"管理员"}</div>
+                                    </div>
+                                </div>
+                                </a><div class="col-sm-6"><a href="profile.html">
+                                    <h3><strong>{$zan->username}</strong></h3>
+                                    <abbr title="Phone">Tel:</abbr> {$zan->phone}
+                                </address>
+                                </div>
+                                <div class="clearfix"></div>
+                            
+                        </div>
+                    </div>
+                    {/foreach}
+                </div>
+                
+
+            </div>
+        </div>
+
+    </div>
+
+{/block}
+
+{block name="js"}
+
+    <script type="text/javascript">
+
+        function img(url) {
+            layer.open({
+                type: 1,
+                title: false,
+                closeBtn: 0,
+                shadeClose: true,
+                content: "<img alt='图片详情' title='图片详情' src=" + url + " />"
+            });
+        }
+        
+    </script>
+{/block}

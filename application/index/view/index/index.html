@@ -1,0 +1,414 @@
+{extend name="layout:index"/}
+{block name="content"}
+
+
+    <!-- header start -->
+    <header id="header" class="header-wrapper home-parallax home-fade">
+        <div class="header-overlay"></div>
+        <div class="header-wrapper-inner">
+            <div class="container">
+                {foreach $activity1 as $activity} 
+                <div class="welcome-speech">
+                    <h1>{:setStr($activity->title,25)}</h1>
+                    <p>{:setStr($activity->address,25)}</p>
+                    <a href="/activity/show?id={$activity->id}" class="btn btn-white">
+                        进入活动
+                    </a>
+                </div><!-- /.intro -->
+                {/foreach}
+                
+            </div><!-- /.container -->
+
+        </div><!-- /.header-wrapper-inner -->
+    </header>
+    <!-- /#header -->
+
+    <div class="main-content">
+
+        <!--  begin intro section -->
+
+        <section class="intro bg-light-gray">
+            <div class="container">
+                {foreach $activity2 as $activity} 
+                <div class="row">
+                    <div class="col-md-5">
+                        <img src="{$activity->img}" class="img-responsive center-block" alt="intro">
+                    </div>
+
+                    <div class="col-md-7">
+                        
+                        <div class="intro-description">
+                            <h2>{:setStr($activity->title,20)}</h2>
+                            <p>
+                                {:setStr(strip_tags($activity->content),60)}
+                            </p>
+
+                            <ul class="points">
+                                <li>
+                                    <span>
+                                        <i class="fa fa-star"></i>
+                                    </span>
+                                    活动发起人：{$activity->user->username}
+                                </li>
+                                <li>
+                                    <span>
+                                        <i class="fa fa-star"></i>
+                                    </span>
+                                    联系手机号：{$activity->phone}
+                                </li>
+                                <li>
+                                    <span>
+                                        <i class="fa fa-star"></i>
+                                    </span>
+                                    费用：{$activity->money==0? "免费":$activity->money."元"}
+                                </li>
+                                <li>
+                                    <span>
+                                        <i class="fa fa-star"></i>
+                                    </span>
+                                    活动开始时间：{:date('m-d H:i',strtotime($activity->start_time))}
+                                </li>
+                                <li>
+                                    <span>
+                                        <i class="fa fa-star"></i>
+                                    </span>
+                                    活动地点：{$activity->address}
+                                </li>
+                            </ul> <!-- end of /.points -->
+
+                            <a href="/activity/show?id={$activity->id}" class="btn btn-slategray">
+                                查看
+                            </a> <!-- /purchase button -->
+                        </div>  
+                        
+                    </div>
+                {/foreach}
+                </div>
+            </div> <!-- end of /.container -->
+        </section> 
+        <!--  end of intro section -->
+
+
+        <!--  begin feature section  -->
+        <section class="bg-white feature" style="padding: 1.6285em 0 2.9145em;">
+            <div class="container">
+                <div class="headline text-center">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3">
+                            <h2 class="section-title">优秀人员</h2>
+                            <p class="section-sub-title">
+                               交流分享，学习更多知识，结交更多朋友！
+                            </p> <!-- /.section-sub-title -->
+                        </div>
+                    </div>
+                </div> <!-- /.headline -->
+                <div class="row">
+                    
+                    {foreach $users as $user} 
+                    <div class="col-md-3">
+                        <div class="feature-content text-center">
+                            <img src="{$user->img}" class="img-circle" style="width: 100px; height: 100px;"> 
+                            <p class="service-description">
+                                 用户名：{$user->username}
+                            </p> 
+                            <p>
+                                 手机号：{$user->phone}
+                            </p> 
+                        </div> <!--  end of /.feature-content  -->
+                    </div>
+                    {/foreach}
+
+                </div>
+            </div> <!-- end of /.container -->
+        </section>  
+        <!--   end of feature section  -->
+
+
+        <!--  begin portfolio section  -->
+        <section class="bg-light-gray">
+            <div class="container">
+
+                <div class="headline text-center">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3">
+                            <h2 class="section-title">最新文章资讯</h2>
+                            <p class="section-sub-title">
+                                提供新闻线索，了解最新行业动态！
+                            </p> <!-- /.section-sub-title -->
+                        </div>
+                    </div>
+                </div> <!-- /.headline -->
+
+                <div class="portfolio-item-list">
+                    <div class="row">
+
+                        {foreach $articles as $article}
+                        <div class="col-md-4 col-sm-6">
+                            <div class="portfolio-item">
+                                <div class="item-image">
+                                    <a href="/article/show?id={$article->id}">
+                                        <img src="{$article->img}" style="width: 335px; height: 215px;" class="img-responsive center-block" alt="portfolio1">
+                                        <div><span><i class="fa fa-plus"></i></span></div>
+                                    </a>
+                                </div>
+
+                                <div class="item-description">
+                                    <div class="row">
+                                        <div class="col-xs-9">
+                                            <span class="item-name">
+                                                {:setStr($article->title,10)}
+                                            </span>
+                                            <span>
+                                                {$article->user->username}
+                                            </span>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <span class="like">
+                                                <i class="fa fa-heart-o"></i>
+                                                {$article->zanUsers()->count()}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div> <!-- end of /.item-description -->
+                            </div> <!-- end of /.portfolio-item -->
+                        </div>
+                        {/foreach} 
+
+
+                    </div>
+                </div> <!-- end of portfolio-item-list -->
+                    
+            </div>
+        </section> <div class="tlinks">Collect from <a href="http://www.cssmoban.com/" >网页模板</a></div>
+        <!--   end of portfolio section  -->
+
+
+        <!-- begin twitter-feed section -->
+        <section class="twit-feed">
+            <div class="twit-feed-wrapper">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1">
+                            <div id="twit" class="owl-carousel owl theme">
+                            
+                            {foreach $outdoors as $outdoor}
+                                <a href="/outdoor/show?id={$outdoor->id}">
+                                    <div class="item text-center">
+                                        <div class="twit-content">
+                                            <div class="twit-icon">
+                                                <i class="fa fa-twitter"></i>
+                                            </div>
+                                            <h3 class="text-capitalize">{:setStr($outdoor->title,25)}</h3>
+                                            <p>
+                                                @管理员 <br/>
+                                                {$outdoor->create_time}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
+                            {/foreach}
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> <!--   end of /.twit-feed section  -->
+
+
+
+        <!-- begin pricing section -->
+        <section class="bg-light-gray">
+            <div class="container">
+
+                <div class="headline text-center">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3">
+                            <h2 class="section-title">最新活动</h2>
+                            <p class="section-sub-title">
+                                实时发布活动项目，简单方便集齐驴友！
+                            </p> <!-- /.section-sub-title -->
+                        </div>
+                    </div>
+                </div> <!-- /.headline -->
+
+                {notempty name="activity4"}
+                <div class="row">
+
+                    {foreach $activity4 as $activity} 
+                        <div class="col-md-3 col-sm-6">
+                            <div class="price-box">
+                                <h3>{:setStr($activity->title,5)}</h3>
+                                <div class="price-info">
+
+                                    <span>{$activity->user->username}</span>
+                                    <span>{$activity->phone}</span>
+                                    <span>{:setStr($activity->address,5)}</span>
+                                    <span>{:date('m-d H:i',strtotime($activity->start_time))}</span>
+                                    <span>{$activity->comments()->count()} 评论</span>
+
+                                    <p class="price"><span>{$activity->money==0? "免费":$activity->money}</span>{$activity->money==0? " ":"/元"}</p>
+
+                                </div> <!-- /.price-info -->
+
+                                <a href="/activity/show?id={$activity->id}" class="btn pricing-btn">Get Started</a>
+                            </div> <!-- /.price-box -->
+                        </div>
+                    {/foreach}
+                </div>
+                {/notempty}
+            </div>
+        </section>
+        <!-- end of pricing section -->
+
+
+
+        <!--  begin testimonial section  -->
+
+        <section class="bg-light-gray">
+            <div class="container">
+
+                <div class="headline text-center">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3">
+                            <h2 class="section-title">最新公告</h2>
+                            <p class="section-sub-title">
+                               查看最新公告，出门在外不走弯路！
+                            </p> <!-- /.section-sub-title -->
+                        </div>
+                    </div>
+                </div> <!-- /.headline -->
+
+                <div id="client-speech" class="owl-carousel owl-theme">
+                    
+                    {notempty name="notice1"}
+                    <div class="item">
+                        <div class="row">
+                            {foreach $notice1 as $k=>$notice} 
+                                <a href="/notice/show?id={$notice->id}">
+                                    <div class="col-md-6">
+                                        <div class="client-box">
+                                            <div class="about-client">
+                                                <img src="/index/img/notice{$k==0?'1':'2'}.jpg" style="width: 150px; height: 100px;">
+                                                <p class="client-intro">{:setStr($notice->title,10)}</p>
+                                            </div> <!-- end of /.about-client -->
+                                            <div class="main-speech" style="min-height: 105px;">
+                                                    <p>
+                                                    {:setStr(strip_tags($notice->content),100)}
+                                               </p>                                        
+                                            </div> <!-- end of /.main-speech  -->
+                                        </div> <!-- end of /.client-box -->
+                                    </div>
+                                </a>
+                            {/foreach}
+                        </div>
+                    </div>
+                    {/notempty}
+                    
+                    {notempty name="notice2"}
+                    <div class="item">
+                        <div class="row">
+                            {foreach $notice2 as $k=>$notice} 
+                                <a href="/notice/show?id={$notice->id}">
+                                    <div class="col-md-6">
+                                        <div class="client-box">
+                                            <div class="about-client">
+                                                <img src="/index/img/notice{$k==0?'3':'4'}.jpg" style="width: 150px; height: 100px;">
+                                                <p class="client-intro">{:setStr($notice->title,10)}</p>
+                                            </div> <!-- end of /.about-client -->
+                                            <div class="main-speech"style="min-height: 105px;">
+                                                
+                                                     <p>
+                                                    {:setStr(strip_tags($notice->content),100)}
+                                               </p>  
+                                                
+                                            </div> <!-- end of /.main-speech  -->
+                                        </div> <!-- end of /.client-box -->
+                                    </div>
+                                </a>
+                            {/foreach}
+                        </div>
+                    </div>
+                    {/notempty}
+
+                    {notempty name="notice3"}
+                    <div class="item">
+                        <div class="row">
+                            {foreach $notice3 as $k=>$notice} 
+                                <a href="/notice/show?id={$notice->id}">
+                                    <div class="col-md-6">
+                                        <div class="client-box">
+                                            <div class="about-client">
+                                                <img src="/index/img/notice{$k==0?'5':'6'}.jpg" style="width: 150px; height: 100px;">
+                                                <p class="client-intro">{:setStr($notice->title,10)}</p>
+                                            </div> <!-- end of /.about-client -->
+                                            <div class="main-speech" style="min-height: 105px;">
+                                                 <p>
+                                                    {:setStr(strip_tags($notice->content),100)}
+                                               </p>  
+                                            </div> <!-- end of /.main-speech  -->
+                                        </div> <!-- end of /.client-box -->
+                                    </div>
+                                </a>
+                            {/foreach}
+                        </div>
+                    </div>
+                    {/notempty}
+
+                </div> <!-- end of /#client-speech  /.owl-carousel -->
+
+            </div> <!-- end of .container -->
+        </section> 
+        <!--  end of testimonial  section -->
+                    
+    </div> <!-- end of /.main-content -->
+
+{/block}
+
+{block name="js"}
+    <!-- script for portfolio section using hoverdirection -->
+    <script type="text/javascript">
+        $(function() {
+
+            $('.portfolio-item > .item-image').each( function() { $(this).hoverdir({
+                hoverDelay : 75
+            }); } );
+
+        });
+    </script>
+
+
+    <!-- script for twitter-feed using owl carousel-->
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $("#twit").owlCarousel({
+             
+                navigation : true, // Show next and prev buttons
+                slideSpeed : 100,
+                paginationSpeed : 400,
+                navigationText : false,
+                singleItem: true,
+                autoPlay: true,
+                pagination: false
+            });
+
+        });
+    </script>
+
+
+    <!-- script for testimonial section using owl carousel -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $("#client-speech").owlCarousel({
+             
+                autoPlay: 5000, //Set AutoPlay to 3 seconds
+                stopOnHover: true,
+                singleItem:true
+            });
+
+        });
+    </script>
+{/block}

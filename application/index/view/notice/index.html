@@ -1,0 +1,113 @@
+{extend name="layout:index"/}
+
+{block name="css"}
+
+{/block}
+
+{block name="content"}
+    
+    <header class="page-head">
+        <div class="header-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <ol class="breadcrumb">
+                            <li><a href="#">首页</a></li>
+                            <li class="active">公告</li>
+                        </ol> <!-- end of /.breadcrumb -->
+
+                    </div>
+                </div>
+            </div> <!-- /.container -->
+        </div> <!-- /.header-wrapper -->
+    </header> 
+
+
+    <section class="blog-content">
+        <div class="container">
+            <div class="row">
+
+                <main class="col-md-9" style="display: block;">
+
+
+                    {foreach $notices as $notice}
+                    <article class="blog-item">
+                        <div class="blog-heading">
+                            <h3 class="text-capitalize">{$notice->title}</h3>
+                            <span class="date">{:date('M-d H:i',strtotime($notice->create_time))}</span>
+                        </div>
+                        <p>
+                            {:setStr(strip_tags($notice->content),250)}
+                        </p>
+
+                        <a href="/notice/show?id={$notice->id}" class="text-capitalize ">
+                            read more
+                            <span><i class="fa fa-angle-double-right"></i> </span>
+                        </a>
+                    </article> <!-- /.blog-item -->
+                    {/foreach}
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <blockquote>
+                                <p>Duis eget ultricies lorem, et rhoncus augue. Aliquam id est semper, tincidunt nisi ac, tristique enim. Phasellus accumsan, enim eget facilisis mollis, est orcidearn malesuada libero, at tristique ligula nulla id eros hasellus accumsan.</p>
+                                <footer>Technext</footer>
+                            </blockquote>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class= "col-md-6 col-md-offset-3 text-center">
+                            {$notices->render()}
+                        </div>
+                    </div>
+                </main>
+
+
+            </div>
+        </div>
+    </section>
+
+{/block}
+
+{block name="js"}
+    <script src="/admin/js/plugins/layer/layer.min.js"></script>
+    <script>
+		$("#home-page").attr('id','multiple-blog-page');
+
+        $(".faq-q").click( function () {
+          var container = $(this).parents(".faq-c");
+          var answer = container.find(".faq-a");
+          var trigger = container.find(".faq-t");
+          
+          answer.slideToggle(200);
+          
+          if (trigger.hasClass("faq-o")) {
+            trigger.removeClass("faq-o");
+          }
+          else {
+            trigger.addClass("faq-o");
+          }
+        });
+
+       
+
+
+       function img(url) {
+            layer.open({
+                type: 1,
+                title: false,
+                closeBtn: 0,
+                shadeClose: true,
+                content: "<img alt='图片详情' title='图片详情' src=" + url + " />"
+            });
+        }
+
+        
+
+
+    </script>
+
+{/block}

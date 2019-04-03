@@ -1,0 +1,166 @@
+{extend name="layout:index"/}
+
+{block name="css"}
+    <link rel="stylesheet" type="text/css" href="/admin/simditor/css/simditor.css">
+{/block}
+{block name="header_js"}
+    <script type="text/javascript"  src="/admin/simditor/js/module.js"></script>
+    <script type="text/javascript"  src="/admin/simditor/js/hotkeys.js"></script>
+    <script type="text/javascript"  src="/admin/simditor/js/uploader.js"></script>
+    <script type="text/javascript"  src="/admin/simditor/js/simditor.js"></script>
+{/block}
+
+{block name="content"}
+    <div class="ibox-title">
+        <h5>协会简介</h5>
+    </div>
+    <div class="ibox-content">
+        <div class="form-horizontal m-t">
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">协会电话：</label>
+                <div class="col-sm-9">
+                    <input id="phone" name="phone" type="number" class="form-control" value="{$association->phone}" aria-required="true">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">协会电话1(非必填)：</label>
+                <div class="col-sm-9">
+                    <input id="phone1" name="phone1" type="number" class="form-control" value="{$association->phone1}">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">协会地址：</label>
+                <div class="col-sm-9">
+                    <input id="address" name="address" type="text" value="{$association->address}" class="form-control" placeholder="协会地址：" required="" aria-required="true">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">协会邮箱：</label>
+                <div class="col-sm-9">
+                    <input id="email" name="email" type="text" value="{$association->email}" class="form-control" placeholder="协会邮箱：" required="" aria-required="true">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">协会简介：</label>
+                <div class="col-sm-9">
+                    <textarea name="content" id="editor" cols="100" rows="8" minlength="10" style="visibility:hidden;"placeholder="填写内容..">{$association->content}
+                    </textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-8 col-sm-offset-3">
+                    <button id="btn" class="btn btn-primary" type="submit">提交</button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+{/block}
+
+{block name="js"}
+    <script src="/admin/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="/admin/js/plugins/validate/messages_zh.min.js"></script>
+    <script src="/admin/js/demo/form-validate-demo.min.js"></script>
+
+    <script>
+
+       $("#btn").click(function(event){
+            var phone=$('#phone').val();
+            var phone1=$('#phone1').val();
+            var address=$('#address').val();
+            var email=$('#email').val();
+            var editor=$('#editor').val();
+
+            if(phone.length==0 || isPhoneNo(phone) == false){
+                layer.msg("手机号格式不正确",{icon:2,time:1000});
+                event.preventDefault();
+                return false;
+            }
+            if(phone1.length!=0 && isPhoneNo(phone1) == false){
+                layer.msg("手机号1格式不正确",{icon:2,time:1000});
+                event.preventDefault();
+                return false;
+            }
+
+            if(address.length==0){
+                layer.msg("协会地址不能为空",{icon:2,time:1000});
+                event.preventDefault();
+                return false;
+            }
+            if(email.length==0){
+                layer.msg("协会邮箱不能为空",{icon:2,time:1000});
+                event.preventDefault();
+                return false;
+            }
+
+            if(editor.length==0){
+                layer.msg("协会简介不能为空",{icon:2,time:1000});
+                event.preventDefault();
+                return false;
+            }
+
+            //请求验证
+            $.ajax({
+                type: 'post',
+                url: '/admin/association/doedit',
+                data: {
+                    address:address,
+                    phone:phone,
+                    phone1:phone1,
+                    email:email,
+                    content:editor,
+                    id:'{$association->id}'
+                },
+                dataType: 'json',
+                success: function(data){
+                    if(data.error ==0 ){
+                        layer.msg(data.msg, {
+                            icon: 1,
+                            time: 2000,
+                            shade:0.5
+                        });
+                        window.location.reload();
+                        
+                    }else{
+                        layer.msg(data.msg, {
+                            icon: 2,
+                            time: 1000, 
+                            shade:0.5
+                        });
+                    }
+                }
+            });
+        }); 
+
+       // 验证手机号
+        function isPhoneNo(phone) {
+            var pattern = /^1[34578]\d{9}$/;
+            return pattern.test(phone);
+        } 
+
+
+        $(document).ready(function(){
+            var editor = new Simditor({
+                textarea: $('#editor'),
+                upload: {
+                    url: '/admin/notice/uploadimg',
+                    params: '',
+                    fileKey: 'upload_file',
+                    connectionCount: 3,
+                    leaveConfirm: '文件上传中，关闭此页面将取消上传。'
+                },
+                pasteImage: true,
+            });
+        });
+
+    </script>
+
+{/block}

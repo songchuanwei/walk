@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html class="no-js"> 
+    <head>
+
+        <title>南阳徒步网</title>
+
+        <!-- meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        
+        <!-- stylesheets -->
+        <link rel="stylesheet" href="/index/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/index/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/index/css/animate.css">
+        <link rel="stylesheet" href="/index/css/owl.carousel.css">
+        <link rel="stylesheet" href="/index/css/owl.theme.css">
+        <link rel="stylesheet" href="/index/css/style.css">
+        {block name="css"} {/block}
+
+
+        <!-- scripts -->
+        <script type="text/javascript" src="/index/js/modernizr.custom.97074.js"></script>
+        {block name="header_js"} {/block}
+
+    </head>
+
+    <body>
+
+        <div id="home-page">
+
+            <!-- site-navigation start -->  
+            <nav id="mainNavigation" class="navbar navbar-dafault main-navigation" role="navigation">
+                <div class="container">
+                    
+                    <div class="navbar-header">
+                        
+                        <!-- navbar logo -->
+                        <div class="navbar-brand">
+                            
+                            <a href="/index/gs">
+                                <img src="/index/img/logo.png" style="width: 200px; height: 75px; margin-top: -20px;" class="img-responsive center-block" alt="logo">
+                            </a>
+                        </div>
+                        <!-- navbar logo -->
+
+                    </div><!-- /.navbar-header -->
+
+                    <!-- nav links -->
+                    <div class="collapse navbar-collapse" id="main-nav-collapse">
+                        <ul class="nav navbar-nav navbar-right text-uppercase">
+                            <li>
+                                <a href="/index/index"><span>首页</span></a>
+                            </li>
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span>活动约伴</span></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="/activity/index">活动列表</a>
+                                    </li>
+                                    <li>
+                                        <a href="/activity/add">发布活动</a>
+                                    </li>
+                                    
+                                </ul>  <!-- end of /.dropdown-menu -->
+                            </li> <!-- end of /.dropdown -->
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span>资讯</span></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="/article/index">资讯列表</a>
+                                    </li>
+                                    <li>
+                                        <a href="/article/add">发布资讯</a>
+                                    </li>
+                                </ul> <!-- end of /.dropdown-menu -->
+                            </li> <!-- end of /.dropdown -->
+                            
+                            <li>
+                                <a href="/outdoor/index"><span>户外知识</span></a>
+                            </li>
+                            <li>
+                                <a href="/notice/index"><span>公告</span></a>
+                            </li>
+                            
+                            {if condition="session('username')"}
+                                <li class="dropdown">
+                                    <a href="#" style="color: #0D8BE7;;"><span>欢迎{:session('username')}</span></a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="/index/my">个人中心</a>
+                                        </li>
+                                        <li>
+                                            <a href="/index/user">个人信息修改</a>
+                                        </li>
+                                        <li>
+                                            <a href="/login/logout">退出</a>
+                                        </li>
+                                    </ul> <!-- end of /.dropdown-menu -->
+                                </li>
+                            {else /}
+                                <li>
+                                    <a href="/login/login" style="color: #0D8BE7;"><span>登陆</span></a>
+                                </li>
+                                <li>
+                                    <a href="/login/register" style="color: red;"><span>注册</span></a>
+                                </li>
+                            {/if}
+
+                        </ul>
+                    </div><!-- nav links -->
+                    
+                </div><!-- /.container -->
+            </nav>
+            <!-- site-navigation end -->
+
+
+            
+            {block name="content"} {/block}
+            
+
+        
+            <!-- footer-navigation start -->  
+            <nav class="hidden-xs hidden-sm navbar footer-nav" role="navigation" style="padding: 30px 0">
+                <div class="container">
+                    
+                    <div class="navbar-header">
+                        
+                        <!-- navbar logo -->
+                        <div class="navbar-brand">
+                            <span class="sr-only">&copy;THEMEWAGON</span>
+                            <a href="index.html">
+                                &copy;THEMEWAGON -More Templates <a href="/index/gs" title="南阳徒步网">南阳徒步网</a> - Collect from <a href="/index/gs" title="{$association->address}">{$association->address}> 
+                            </a>
+                        </div>
+                        <!-- navbar logo -->
+
+                    </div><!-- /.navbar-header -->
+
+                    <!-- nav links -->
+                    <div class="collapse navbar-collapse" id="main-nav-collapse">
+                        <ul class="nav navbar-nav navbar-right text-capitalize">
+                            <li><a href="/index/index">
+                                <span>首页</span>
+                            </a></li>
+
+                            <li><a href="/activity/index">
+                                <span>活动约伴</span>
+                            </a></li>
+
+                            <li><a href="/article/index">
+                                <span>资讯</span>
+                            </a></li>
+
+                            <li><a href="/outdoor/index">
+                                <span>户外知识</span>
+                            </a></li>
+
+                            <li><a href="/notice/index">
+                                <span>公告</span>
+                            </a></li>
+
+                        </ul>
+                    </div><!-- nav links -->
+                    
+                </div><!-- /.container -->
+            </nav>
+            <!-- footer-navigation end -->
+           
+            
+        </div> <!-- end of /#home-page -->
+    
+        <!-- 客服 -->
+        <a onclick="{if condition='session("username")'}sign(){else/}login(){/if}" style="position: fixed;top: 35%;right: 0;z-index: 1000;"><img border="0" src="/index/img/kefu.png" alt="点击这里给我发消息" title="点击这里给我发消息" style="width: 60px;height: 65px;"></a>
+        
+
+        <script type="text/javascript" src="/index/js/jquery-2.1.3.min.js"></script>
+        <script type="text/javascript" src="/index/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/index/js/owl.carousel.js"></script>
+        <script type="text/javascript" src="/index/js/jquery.hoverdir.js"></script>
+
+        {include file="layout/success" /}
+
+        {block name="js"} {/block}
+
+
+
+    </body>
+    
+    <script src="/admin/js/plugins/layer/layer.min.js"></script>
+    <script>
+        //客服对话
+        function sign(){
+            var indexs=layer.open({
+                type: 2,
+                title: '客服对话',
+                shadeClose: true,
+                shade: false,
+                maxmin: true, //开启最大化最小化按钮
+                area: ['800px', '400px'],
+                content: "/index/sign"
+            });
+        }
+
+        //判断登陆
+        function login() {
+            layer.confirm('联系客服前请先登录？',function(index){
+                window.location.href="/login/login";
+            });
+        }
+    </script>
+</html>
